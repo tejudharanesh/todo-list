@@ -1,26 +1,20 @@
 import React, { useState } from "react";
 import ToDoItem from "./toDoItem";
+import Input from "./input";
 
 function App() {
-    const [ inputText, setInputText] = useState("");
-    const [ items,setItems] = useState([]);
+    const [ items,setItems] = useState([]); //creating  a state variable for our list(array) of tasks.
 
-    function handleChange(event){
-        const newvalue = event.target.value;
-        setInputText(newvalue);
-    }
-
-    function addItem(){
-        setItems(prevItems => {
+    function addItem(inputText){
+        setItems(prevItems => {                  // addItem function  is used to add new task in the array using setItem 
             return [...prevItems, inputText];
         });
-        setInputText("");
     }
 
     function  deleteItem(itemIndex) {
       setItems( prevItems => {
-        return prevItems.filter(
-          (items,index) => {
+        return prevItems.filter(                //deleteItem used to delete the selected task from the array based on the index 
+          (items,index) => {                        //retrived from the toDoItem jsx file
             return  index !== itemIndex;
           }
       )
@@ -28,26 +22,22 @@ function App() {
       };
 
 
-
   return (
     <div className="container">
       <div className="heading">
         <h1>To-Do List</h1>
-      </div>
-      <div className="form">
-        <input onChange={handleChange} type="text" value={inputText}/>
-        <button onClick={addItem}>
-          <span>Add</span>
-        </button>
-      </div>
+      </div> 
+
+      <Input onAdd = {addItem}/>    {/* calling input component  and passing a callback function */}
+    
       <div>
         <ul>
-          {items.map((todoItem,index) => 
+          {items.map((todoItem,index) =>    //calling ToDoItem component  and passing props in it.
             <ToDoItem 
             item={todoItem} 
             key={index} 
             id={index} 
-            onChecked = {deleteItem}
+            onChecked = {deleteItem}    // passing an event handler onChecked  which is calling deleteItem function
             />
             )}
         </ul>
