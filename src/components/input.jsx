@@ -16,7 +16,7 @@ function Input(props){
             setInputText("");
         }
         }>
-          <span>Add</span>
+          <span>Add item</span>
         </button>
       </div>
       );
